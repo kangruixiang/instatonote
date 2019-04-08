@@ -3,6 +3,8 @@ import os
 import glob
 from jinja2 import Environment, FileSystemLoader
 
+USER = input("\nEnter Instagram username: ")
+
 file_loader = FileSystemLoader('templates')
 env = Environment(loader=file_loader)
 
@@ -10,9 +12,10 @@ template = env.get_template('template.html')
 
 L = instaloader.Instaloader(dirname_pattern='posts', save_metadata=False, 
                             compress_json=False, download_comments=False, 
-                            post_metadata_txt_pattern='', filename_pattern='{shortcode}/{shortcode}')
-L.load_session_from_file("kangruixiang")
-profile = instaloader.Profile.from_username(L.context, "kangruixiang")
+                            post_metadata_txt_pattern='', filename_pattern='{shortcode}/{shortcode}',
+                            download_geotags=False)
+L.interactive_login(USER) 
+profile = instaloader.Profile.from_username(L.context, USER)
 
 class Instasaved:
 
@@ -64,9 +67,10 @@ def jinja_output(title, url, url_text, jpg_images, mp4_videos, caption):
     return render 
 
 def html_file(render, shortcode):
-    with open(f'posts/{shortcode}.html', 'w', encoding='utf-8') as f:
+    saved_html = os.path.join('posts', f'{shortcode}.html')
+    with open(saved_html, 'w', encoding='utf-8') as f:
         f.write(render)
-    print(f'saving {shortcode}.html')
+    print(f'saving {shortcode}')
 
 def download_saved():
     for post in profile.get_saved_posts():
@@ -92,7 +96,7 @@ def main():
         mp4_videos = find_videos(shortcode)
         render = jinja_output(title, url, url_text, jpg_images, mp4_videos, caption)
         html_file(render, shortcode)
-    move_videos()
+    # move_videos()
 
 if __name__ == "__main__":
     main()
