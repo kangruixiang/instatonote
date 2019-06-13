@@ -3,6 +3,8 @@ import os
 import glob
 from jinja2 import Environment, FileSystemLoader
 
+"""saves instagram saved posts"""
+
 USER = input("\nEnter Instagram username: ")
 
 file_loader = FileSystemLoader('templates')
