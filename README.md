@@ -1,10 +1,8 @@
-# instatonote
+## instatonote and instasave
 
-Downloads your instagram saved posts and format them as such to be imported into Evernote. This uses the "import folders" function in Evernote and thus only works for Windows as of now. Mac version of Evernote does not have "import functions."
+Instatonote downloads your instagram saved posts and format them as such to be imported into Evernote. This uses the "import folders" function in Evernote and thus only works for Windows as of now. Mac version of Evernote does not have "import functions."
 
-# instasave
-
-Saves Instagram posts based on given url
+Instasave saves Instagram posts based on given url.
 
 ## Requirements
 
