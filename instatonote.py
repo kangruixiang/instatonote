@@ -98,7 +98,7 @@ def main():
         mp4_videos = find_videos(shortcode)
         render = jinja_output(title, url, url_text, jpg_images, mp4_videos, caption)
         html_file(render, shortcode)
-    # move_videos()
+    move_videos()
 
 if __name__ == "__main__":
     main()

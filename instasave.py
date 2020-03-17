@@ -11,7 +11,7 @@ L = instaloader.Instaloader(dirname_pattern='posts', save_metadata=False,
 USER = input("\nEnter Instagram username: ")
 L.interactive_login(USER) 
 
-shortcode = 'BvZ20xLBcj2p9VtiGkr8d4gOSNjV48737E4vGU0'
+shortcode = 'placeholder'
 
 def save_post():
 
