@@ -20,7 +20,7 @@ class Instasaved:
         self.image_url = f'{shortcode}.jpg'
 
 
-def downloadSettings(username):
+def download_settings(username):
     setting = instaloader.Instaloader(dirname_pattern='posts', save_metadata=False,
                                       compress_json=False, download_comments=False,
                                       post_metadata_txt_pattern='', filename_pattern='{shortcode}/{shortcode}',
@@ -29,7 +29,7 @@ def downloadSettings(username):
     return setting
 
 
-def getProfile(username, setting):
+def get_profile(username, setting):
     profile = instaloader.Profile.from_username(setting.context, username)
     return profile
 
@@ -67,7 +67,7 @@ def find_videos(shortcode):
     return mp4_videos
 
 
-def returnTemplate(template):
+def return_template(template):
     file_loader = FileSystemLoader('templates')
     env = Environment(loader=file_loader)
 
@@ -100,15 +100,15 @@ def move_videos():
 def main():
     make_dirs('posts')
     username = input("\nEnter Instagram username: ")
-    setting = downloadSettings(username)
-    profile = getProfile(username, setting)
+    setting = download_settings(username)
+    profile = get_profile(username, setting)
     download_saved(profile, setting)
     for post in profile.get_saved_posts():
         I = Instasaved(post.caption, post.shortcode)
         title, caption, shortcode, url, url_text, image_url = I.title, I.caption, I.shortcode, I.url, I.url_text, I.image_url
         jpg_images = find_images(shortcode)
         mp4_videos = find_videos(shortcode)
-        template = returnTemplate('template.html')
+        template = return_template('template.html')
         render = jinja_output(title, url, url_text,
                               jpg_images, mp4_videos, caption, template)
         html_file(render, shortcode)
