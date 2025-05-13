@@ -1,25 +1,36 @@
+<!DOCTYPE html>
 <html>
 
 <head>
+    <meta charset=utf-8>
+    <meta property="source" content="{{url_text}}">
+    <meta property="source-url" content="{{url}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{title}}</title>
 </head>
 
+<style>
+    body {
+        font-family: Verdana, "Segoe UI", sans-serif;
+        font-size: 16px
+    }
+</style>
+
 <body>
-    <br />
-    <div><span>
-            <div>
-                <div><br /></div>
-                {% for img in images %}
-                <img src={{ img }} type="image/png"/><br />
-                {% endfor %}
-            </div>
-        </span>
-        {{caption}}
-    </div>
-    <div><table>
-        <tr><td>Source: <a href="{{url}}">{{url_text}}</a></td></tr>
-    </table>
-    </div>
+    <div>
+        {% for imgURL in images %}
+        <div>
+            <img src={{ imgURL }} type="image/png" />
+        </div>
+        {% endfor %}
+        {% for vidURL in videos %}
+        <div>
+            <video style='width:100%' controls>
+                <source src={{ vidURL }} />Your browser does not support the video tag.
+            </video>
+        </div>
+        {% endfor %}
+        <p>{{caption}}</p>
 </body>
 
 </html>
