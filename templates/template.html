@@ -18,10 +18,10 @@
 </style>
 
 <body>
-    <div>
+    <div class="media-list">
         {% for imgURL in images %}
-        <div>
-            <img src={{ imgURL }} type="image/png" />
+        <div class="img-wrapper">
+            <img src={{ imgURL }} />
         </div>
         {% endfor %}
         {% for vidURL in videos %}
@@ -32,6 +32,7 @@
         </div>
         {% endfor %}
         <p>{{caption}}</p>
+    </div>
 </body>
 
 </html>

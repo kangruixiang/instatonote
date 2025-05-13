@@ -107,7 +107,7 @@ def main():
     make_dirs('posts')
 
     while True:
-        postURL = input('\nEnter Post URL: ')
+        postURL = input('\nEnter post unique URL: ')
         post = save_post(postURL)
         I = Instasaved(post.caption, post.shortcode)
         title, caption, shortcode, url, url_text = I.title, I.caption, I.shortcode, I.url, I.url_text

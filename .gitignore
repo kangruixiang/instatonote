@@ -1,3 +1,5 @@
 env/
 posts/
 venv/
+output/
+test/
