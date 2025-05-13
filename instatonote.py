@@ -10,12 +10,21 @@ from jinja2 import Environment, FileSystemLoader
 
 class Instasaved:
     def __init__(self, caption, shortcode):
-        try:
-            self.title = caption[:50]
-            self.caption = caption
-        except:
+        if not caption or caption.strip() == '':
             self.title = shortcode
             self.caption = ''
+        elif len(caption) <= 80:
+            self.title = caption
+            self.caption = caption
+        else:
+            cutoff = caption[:80].rstrip()
+            last_space = cutoff.rfind(' ')
+            if last_space == -1:
+                self.title = cutoff + '...'
+                self.caption = caption
+            else:
+                self.title = cutoff[:last_space] + '...'
+                self.caption = caption          
         self.shortcode = shortcode
         self.url = f'https://instagram.com/p/{shortcode}'
         self.url_text = self.url.split("/")[2]
@@ -25,11 +34,6 @@ L = instaloader.Instaloader(dirname_pattern='posts', save_metadata=False,
                             compress_json=False, download_comments=False, 
                             post_metadata_txt_pattern='', filename_pattern='{shortcode}/{shortcode}',
                             download_geotags=False)
-
-# USER = input("\nEnter Instagram username: ")
-# L.interactive_login(USER) 
-
-postURL = input('\nEnter Post URL: ')
 
 shortcode = 'placeholder'
 
@@ -43,9 +47,6 @@ def find_images(shortcode):
     image_list = glob.glob(path)
     jpg_images = []
     for img_path in image_list:
-        # imgurl = img.split('\\')[1:]
-        # imgurl = '/'.join(imgurl)
-        # jpg_images.append(imgurl)
         img_in_64 = convert_to_base64(img_path)
         jpg_images.append(img_in_64)
     
@@ -57,8 +58,6 @@ def find_videos(shortcode):
     vid_list = glob.glob(path)
     mp4_videos = []
     for vid_path in vid_list:
-        # vidurl = vid.split('\\')[1:]
-        # vidurl = '/'.join(vidurl)
         vid_in_64 = convert_to_base64(vid_path)
         mp4_videos.append(vid_in_64)
 
@@ -101,21 +100,23 @@ def convert_to_base64(file_path):
     
 def cleanup(shortcode):
     media_path = os.path.join('posts', shortcode)
-    print(media_path)
     shutil.rmtree(media_path)
 
 
 def main():
     make_dirs('posts')
-    post = save_post(postURL)
-    I = Instasaved(post.caption, post.shortcode)
-    title, caption, shortcode, url, url_text = I.title, I.caption, I.shortcode, I.url, I.url_text
-    jpg_images = find_images(shortcode)
-    mp4_videos = find_videos(shortcode)
-    template = return_template('template.html')
-    render = jinja_output(title, url, url_text, jpg_images, mp4_videos, caption, template)
-    html_file(render, shortcode)
-    cleanup(shortcode)
+
+    while True:
+        postURL = input('\nEnter Post URL: ')
+        post = save_post(postURL)
+        I = Instasaved(post.caption, post.shortcode)
+        title, caption, shortcode, url, url_text = I.title, I.caption, I.shortcode, I.url, I.url_text
+        jpg_images = find_images(shortcode)
+        mp4_videos = find_videos(shortcode)
+        template = return_template('template.html')
+        render = jinja_output(title, url, url_text, jpg_images, mp4_videos, caption, template)
+        html_file(render, shortcode)
+        cleanup(shortcode)
 
 if __name__ == "__main__":
     main()
