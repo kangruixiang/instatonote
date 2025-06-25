@@ -18,6 +18,6 @@ https://www.instagram.com/p/abcdefg/
 
 You would enter 'abcdefg.'
 
-An example looks like this:
+An example save looks like this:
 
 ![](images/saved.png)
