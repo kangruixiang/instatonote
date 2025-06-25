@@ -35,6 +35,8 @@ L = instaloader.Instaloader(dirname_pattern='posts', save_metadata=False,
                             post_metadata_txt_pattern='', filename_pattern='{shortcode}/{shortcode}',
                             download_geotags=False)
 
+# L.interactive_login('')
+
 shortcode = 'placeholder'
 
 def make_dirs(directory):
