@@ -1,8 +1,8 @@
-## Instatonote 
+## Instatonote
 
 Instatonote downloads public instagram posts and saves them in html format for long term storage. Each html file can be individually viewed.
 
-Images and videos are embedded in the html file, making them portable and easy to import into other programs such as [Snippet Curator](http://curator.krxiang.com).
+Images and videos are embedded in the html file, making them portable and easy to import into other programs such as [Curator](http://curator.krxiang.com).
 
 ## Requirements
 
