@@ -9,7 +9,7 @@ from jinja2 import Environment, FileSystemLoader
 """Saves Instagram post based on given url"""
 
 class Instasaved:
-    def __init__(self, caption, shortcode):
+    def __init__(self, caption, shortcode, profile):
         if not caption or caption.strip() == '':
             self.title = shortcode
             self.caption = ''
@@ -25,6 +25,7 @@ class Instasaved:
             else:
                 self.title = cutoff[:last_space] + '...'
                 self.caption = caption          
+        self.profile = profile
         self.shortcode = shortcode
         self.url = f'https://instagram.com/p/{shortcode}'
         self.url_text = self.url.split("/")[2]
@@ -72,9 +73,9 @@ def return_template(template):
     template = env.get_template('template.html')
     return template
 
-def jinja_output(title, url, url_text, jpg_images, mp4_videos, caption, template):
+def jinja_output(title, url, url_text, profile, jpg_images, mp4_videos, caption, template):
     render = template.render(title=title, url=url, url_text=url_text,
-                             images=jpg_images, videos=mp4_videos, caption=caption)
+                             images=jpg_images, videos=mp4_videos, caption=caption, profile=profile)
     return render
 
 def html_file(render, shortcode):
@@ -111,12 +112,12 @@ def main():
     while True:
         postURL = input('\nEnter post unique URL: ')
         post = save_post(postURL)
-        I = Instasaved(post.caption, post.shortcode)
-        title, caption, shortcode, url, url_text = I.title, I.caption, I.shortcode, I.url, I.url_text
+        I = Instasaved(post.caption, post.shortcode, post.profile)
+        title, caption, shortcode, url, url_text, profile = I.title, I.caption, I.shortcode, I.url, I.url_text, I.profile
         jpg_images = find_images(shortcode)
         mp4_videos = find_videos(shortcode)
         template = return_template('template.html')
-        render = jinja_output(title, url, url_text, jpg_images, mp4_videos, caption, template)
+        render = jinja_output(title, url, url_text, profile, jpg_images, mp4_videos, caption, template)
         html_file(render, shortcode)
         cleanup(shortcode)
 
